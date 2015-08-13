@@ -37,38 +37,42 @@
 
 </head>
 <body>
-	<header>
+	<header>	
 		<h1> Rebus </h1>
 	</header>
-
-	<div ng-controller = "BuildingCtrl">
-		<div class = "row">
-			<div class = "col-md-7 col-sm-7">
-				<center>
-					<div style = "text-align: left;">
-						<div ng-repeat = "word in rebusWords.words">
-							{{$index + 1}}.
-							<div ng-repeat = "n in [] | range: leftest - word.position + 1" class = "square-rebus"> </div
-							><input type = "text" class = "square-rebus" ng-repeat = "letter in word.letters" id = "{{word.index + 'a' + letter.index}}" ng-class = "{shiny: word.position == letter.index}"  maxlength = "1"/>
-							<span ng-show = "word.correct"> :) </span>
-							<span ng-show = "!word.correct"> :( </span>
+	<br />
+	<br />
+	<center>
+		<div ng-controller = "BuildingCtrl" style = "width: 80%; text-align: justify;">
+			<div class = "row">
+				<div class = "col-md-6 col-sm-6">
+					<center>
+						<div style = "text-align: left;">
+							<div ng-repeat = "word in rebusWords.words">
+								{{$index + 1}}.
+								<div ng-repeat = "n in [] | range: leftest - word.position + 1" class = "square-rebus"> </div
+								><input type = "text" class = "square-rebus" ng-repeat = "letter in word.letters" id = "{{word.index + 'a' + letter.index}}" ng-class = "{shiny: word.position == letter.index}"  maxlength = "1"/>
+								<span ng-show = "word.correct"> :) </span>
+								<span ng-show = "!word.correct"> :( </span>
+							</div>
 						</div>
-					</div>
-				</center>
+					</center>
+				</div>
+				<div class = "col-md-6 col-sm-6">
+					<ol>
+						<li ng-repeat = "word in rebusWords.words">
+							{{word.description}}
+						</li>
+					</ol>
+				</div>
 			</div>
-			<div class = "col-md-5 col-sm-5">
-				<ol>
-					<li ng-repeat = "word in rebusWords.words">
-						{{word.description}}
-					</li>
-				</ol>
-			</div>
+			<br />
+			<br />
+			<center>	
+				<button class = "btn btn-default" ng-click = "checkRebus()"> Verifică </button>
+			</center>
 		</div>
-
-		<center>	
-			<button class = "btn btn-default" ng-click = "checkRebus()"> Verifică </button>
-		</center>
-	</div>
+	</center>
 
 
 	<footer>

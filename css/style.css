@@ -10,3 +10,20 @@
 .shiny {
 	border: solid black 3px;
 }
+
+header {
+	background-color: black;
+	padding: 10px;
+	padding-left: 30px;
+	color: white;
+}
+
+footer {
+	position: fixed;
+	bottom: 0px;
+	background-color: black;
+	text-align: center;
+	width: 100%;
+	padding: 30px;
+	color: white;
+}
