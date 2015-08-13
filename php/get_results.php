@@ -2,7 +2,7 @@
 	include 'db_connect.php';
 	mysql_query("set names 'utf8'");
 
-	$select_query = "SELECT * FROM words";
+	$select_query = "SELECT * FROM results";
 	$select_result = mysql_query($select_query);
 	$count = mysql_num_rows($select_result);
 

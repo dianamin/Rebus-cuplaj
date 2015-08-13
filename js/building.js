@@ -1,13 +1,15 @@
 app.controller('BuildingCtrl', function ($scope, $http) {
 	$scope.words = [];
 	$scope.rebusWords = [];
+	$scope.results = [];
 
     $scope.leftest = -1;
     $scope.buildRebus = function() {
     	/*
-    		Construiesc rebusul pentru cuvântul "lorem", apoi verific care este cea mai din stânga poziție pentru afișarea rebusului.
+    		Construiesc rebusul pentru cuvântul rezultat ales random, apoi verific care este cea mai din stânga poziție pentru afișarea rebusului.
     	*/
-		$scope.rebusWords = returnWords($scope.words, "lorem");
+    	var index = Math.floor(Math.random() * $scope.results.length);
+		$scope.rebusWords = returnWords($scope.words, $scope.results[index].word);
 
         for (var i = 0; i < $scope.rebusWords.words.length; i++) {
             if ($scope.rebusWords.words[i].position > $scope.leftest) {
@@ -28,10 +30,8 @@ app.controller('BuildingCtrl', function ($scope, $http) {
             var input = "";
             for (var j = 0; j < $scope.rebusWords.words[i].letters.length; j++) {
                 var value = document.getElementById(i + 'a' + j).value.toLowerCase();
-                //console.log(value);
                 input = input + value;
             }
-            console.log($scope.rebusWords.words[i].value + " ");
             if (input.toLowerCase() == $scope.rebusWords.words[i].value) {
                 $scope.rebusWords.words[i].correct = true;
             }
@@ -40,9 +40,15 @@ app.controller('BuildingCtrl', function ($scope, $http) {
 
 	$http({method: 'GET', url: 'php/get_words.php'}).success(function(data) {
 		/*
-			Preiau datele din baza de date si construiesc rebusul.
+			Preiau cuvintele din baza de date.
 		*/
 		$scope.words = data;
-		$scope.buildRebus();
+		$http({method: 'GET', url: 'php/get_results.php'}).success(function(data) {
+			/*
+				Preiau posibilele rezultate din baza de date și construiesc rebusul.
+			*/
+			$scope.results = data;
+			$scope.buildRebus();
+		});
 	});
 });

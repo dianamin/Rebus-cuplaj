@@ -25,7 +25,6 @@ var shuffle = function(a) {
 		a[i] = a[j];
 		a[j] = aux;
 	}
-	console.log(a);
 	return a;
 }
 
@@ -161,7 +160,7 @@ var returnWords = function(words_array, result_word) {
 	/*
 		Dacă pot obține un rebus pentru result_word, îl returnez.
 	*/
-	
+
 	words = words_array;
 	result = result_word;
 	buildGraph();
@@ -174,7 +173,6 @@ var returnWords = function(words_array, result_word) {
 	var ok = true;
 
 	var resultLength = result.length;
-	console.log(b);
 	for (var i = 0; i < resultLength && ok; i++) {
 		if (b[i] == -1) {
 			ok = false;
