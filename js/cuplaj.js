@@ -1,10 +1,23 @@
+/*
+	Algoritmul de cuplaj maxim în graf bipartit
+	http://www.infoarena.ro/job_detail/1373102?action=view-source
+*/
+
 var graph = [];
 var words = [];
 var result = [];
 
 var a = [], b = [], visited = [];
 
+/*
+	a[x] = numărul literei din cuvântul rezultat cu care poate fi cuplat cuvântul al x-lea din vectorul words
+	b[x] = numărul cuvântului din vectorul words cu care poate fi cuplată litera a x-a din cuvântul rezultat
+*/
+
 var shuffle = function(a) {
+	/*
+		Funcție pentru amestecarea valorilor unui vector.
+	*/
 	var l = a.length - 1;
 	for (var i = l; i > 0; i--) {
 		var j = Math.floor(Math.random() * (i + 1));
@@ -22,11 +35,23 @@ var buildGraph = function() {
 	graph = [];
 	visited = [];
 
+	/*
+		Amestec cuvintele pentru a avea de fiecare dată un rezultat diferit.
+	*/
+
 	words = shuffle(words);
+
 
 	var resultLength = result.length;
 	var possibleWordsLength = words.length;
 	var currentNodes = [];
+
+	/*
+		Construiesc graful bipartit.
+		Nodurile din partea stânga a grafului vor reprezenta literele din cuvântul rezultat.
+		Nodurile din partea dreaptă a grafului vor reprezenta cuvintele din vectorul word.
+		Voi avea muchie între un nod din partea stângă și unul din partea dreaptă dacă litera asociată nodului din stânga se regăsește în cuvântul asociat nodului din dreapta.
+	*/
 
 	for (var i = 0; i < resultLength; i++) {
 		var character = result[i];
@@ -53,12 +78,23 @@ var buildGraph = function() {
 }
 
 var DFS = function(node) {
+
+	/*
+		Încerc să cuplez nodul (litera) transmis ca parametru.
+	*/
+
 	if (visited[node]) {
 		return false;
 	}
 	visited[node] = true;
 
 	var length = graph[node].length;
+
+	/*
+		Mai întâi, verific dacă nodurile-cuvinte legate de nodul-literă sunt cuplate cu un alt nod literă.
+		Dacă găsesc unul care nu e cuplat, atunci îl cuplez cu nodul-literă transmis ca parametru.
+	*/
+
 	for (var i = 0; i < length; i++) {
 		var son = graph[node][i];
 		if (a[son] == -1) {
@@ -67,6 +103,11 @@ var DFS = function(node) {
 			return true;
 		}
 	}
+
+	/*
+		Dacă toate nodurile-cuvinte sunt cuplate, atunci verific dacă există vreun nod-literă la care un nod-cuvânt este cuplat astfel încât să îl pot cupla cu alt cuvânt.
+		Dacă există, atunci îl voi recupla, iar nodul-cuvânt rămas necuplat va fi cuplat cu nodul-literă transmis ca parametru.
+	*/
 	for (var i = 0; i < length; i++) {
 		var son = graph[node][i];
 		if (DFS(a[son])) {
@@ -76,10 +117,18 @@ var DFS = function(node) {
 		}
 	}
 
+	/*
+		Nu am reușit să cuplez nodul.
+	*/
+
 	return false;
 }
 
 var cuplaj = function() {
+	/*
+		Cuplez nodurile litere
+	*/
+
 	var done = false;
 
 	var resultLength = result.length;
@@ -109,6 +158,10 @@ var log = function() {
 }
 
 var returnWords = function(words_array, result_word) {
+	/*
+		Dacă pot obține un rebus pentru result_word, îl returnez.
+	*/
+	
 	words = words_array;
 	result = result_word;
 	buildGraph();
