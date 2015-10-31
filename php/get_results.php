@@ -1,4 +1,5 @@
 <?php
+	//foarte frumix codul <3 pacat ca e prea php
 	include 'db_connect.php';
 	mysql_query("set names 'utf8'");
 
